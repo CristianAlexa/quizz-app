@@ -3,6 +3,7 @@ import "./App.css";
 import PlayScreen from "./components/PlayScreen";
 import StartScreen from "./components/StartScreen";
 import { nanoid } from "nanoid";
+import { decode } from "html-entities";
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -26,7 +27,7 @@ function App() {
         } = result;
 
         const correctAnswer = {
-          answer: correct_answer,
+          answer: decode(correct_answer),
           isCorrect: true,
           isSelected: false,
           id: nanoid(),
@@ -34,7 +35,7 @@ function App() {
 
         const incorrectAnswers = incorrect_answers.map((answer) => {
           return {
-            answer: answer,
+            answer: decode(answer),
             isCorrect: false,
             isSelected: false,
             id: nanoid(),
@@ -57,7 +58,7 @@ function App() {
           id: nanoid(),
           category: category,
           difficulty: difficulty,
-          question: question,
+          question: decode(question),
           answers: answers(),
         };
       });

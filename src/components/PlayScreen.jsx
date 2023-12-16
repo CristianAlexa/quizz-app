@@ -4,6 +4,7 @@ import Results from "./Results";
 
 export default function PlayScreen({ quizz, setIsPlaying, handleAnswerClick }) {
   const [isAnswered, setIsAnswered] = useState(false);
+
   return (
     <>
       {!isAnswered ? (

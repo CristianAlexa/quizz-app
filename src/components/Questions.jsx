@@ -1,11 +1,12 @@
 export default function Questions({ quizz, setIsAnswered, handleAnswerClick }) {
-  // console.log(quizz);
+  const answeredQuestionsCount = () => {
+    let count = 0;
+    quizz.map((question) =>
+      question.answers.map((answer) => (answer.isSelected ? count++ : count))
+    );
+    return count;
+  };
 
-  const answeredQuestions = quizz.filter((question) => {
-    return question.answers.filter((answer) => answer.isSelected === true);
-  });
-
-  console.log(answeredQuestions);
   return (
     <>
       <section className="questions">
@@ -34,9 +35,11 @@ export default function Questions({ quizz, setIsAnswered, handleAnswerClick }) {
           </article>
         ))}
       </section>
-
       <div className="footer">
-        <button className="play" onClick={() => setIsAnswered(true)}>
+        <button
+          className={answeredQuestionsCount() != 5 ? "btn-disable" : ""}
+          onClick={() => setIsAnswered(true)}
+        >
           Check answers
         </button>
       </div>

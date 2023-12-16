@@ -1,23 +1,36 @@
 export default function Results({ setIsPlaying, quizz }) {
+  const correctAnswerCount = () => {
+    let count = 0;
+    quizz.map((question) =>
+      question.answers.map((answer) =>
+        answer.isSelected === true && answer.isCorrect === true
+          ? count++
+          : count
+      )
+    );
+    return count;
+  };
+  console.log(correctAnswerCount());
   return (
     <>
       <section className="questions">
         {quizz.map((question) => (
-          <article className="question-item" key={question.id}>
+          <article className="question-item" key={question.id} id={question.id}>
             <h3 className="question-title">{question.question}</h3>
             <div className="question-answers">
               {question.answers.map((answer) => (
-                <div className="answer pending" key={answer.id}>
-                  <label htmlFor={answer.id}>
-                    <span>{answer.answer}</span>
-                  </label>
-                  <input
-                    type="radio"
-                    id={answer.id}
-                    name={answer.answer}
-                    checked={answer.isSelected}
-                    onChange={(e) => handleAnswerClick(e.target.id)}
-                  />
+                <div
+                  className={
+                    answer.isCorrect
+                      ? "answer correct"
+                      : answer.isSelected && !answer.isCorrect
+                      ? "answer wrong"
+                      : "answer"
+                  }
+                  key={answer.id}
+                  id={answer.id}
+                >
+                  {answer.answer}
                 </div>
               ))}
             </div>
@@ -26,8 +39,8 @@ export default function Results({ setIsPlaying, quizz }) {
       </section>
 
       <div className="footer">
-        <p>You scored 3/5 correct answers</p>
-        <button className="play" onClick={() => setIsPlaying(false)}>
+        <p>You scored {correctAnswerCount()} / 5 correct answers</p>
+        <button className="" onClick={() => setIsPlaying(false)}>
           Play again
         </button>
       </div>
